@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Filament\Resources\Levels\Schemas;
+
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Schema;
+
+class LevelForm
+{
+    public static function configure(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+                Select::make('course_id')
+                    ->label('الكورس')
+                    ->relationship('course', 'title')
+                    ->required(),
+                TextInput::make('name')
+                    ->label('الاسم')
+                    ->required(),
+                \Filament\Forms\Components\Hidden::make('order')
+                    ->default(0),
+            ]);
+    }
+}
