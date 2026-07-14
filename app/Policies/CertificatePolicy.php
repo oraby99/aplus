@@ -3,32 +3,34 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Certificate;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CertificatePolicy
 {
+    use HandlesAuthorization;
+
     public function viewAny(User $user): bool
     {
-        return in_array($user->type, ['admin', 'teacher']);
+        return $user->hasPermissionTo('view_any_certificate') || $user->hasRole('super_admin');
     }
 
-    public function view(User $user, Certificate $model): bool
+    public function view(User $user, $model = null): bool
     {
-        return in_array($user->type, ['admin', 'teacher']);
+        return $user->hasPermissionTo('view_certificate') || $user->hasRole('super_admin');
     }
 
     public function create(User $user): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('create_certificate') || $user->hasRole('super_admin');
     }
 
-    public function update(User $user, Certificate $model): bool
+    public function update(User $user, $model = null): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('update_certificate') || $user->hasRole('super_admin');
     }
 
-    public function delete(User $user, Certificate $model): bool
+    public function delete(User $user, $model = null): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('delete_certificate') || $user->hasRole('super_admin');
     }
 }

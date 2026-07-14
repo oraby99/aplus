@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms;
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components as SchemaComponents;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -48,7 +49,7 @@ class StudentResource extends Resource
     {
         return $schema
             ->schema([
-                Forms\Components\Section::make('البيانات الأساسية للطفل')
+                SchemaComponents\Section::make('البيانات الأساسية للطفل')
                     ->schema([
                         Forms\Components\TextInput::make('name')
                             ->label('الاسم')
@@ -74,7 +75,7 @@ class StudentResource extends Resource
                             ->default('student'),
                     ])->columns(2),
 
-                Forms\Components\Section::make('معلومات ولي الأمر والدراسة')
+                SchemaComponents\Section::make('معلومات ولي الأمر والدراسة')
                     ->schema([
                         Forms\Components\TextInput::make('parent_name')
                             ->label('اسم ولي الأمر')
@@ -161,10 +162,5 @@ class StudentResource extends Resource
             'create' => Pages\CreateStudent::route('/create'),
             'edit' => Pages\EditStudent::route('/{record}/edit'),
         ];
-    }
-
-    public static function canViewAny(): bool
-    {
-        return in_array(auth()->user()?->type, ['admin', 'teacher']);
     }
 }

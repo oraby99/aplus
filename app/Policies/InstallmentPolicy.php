@@ -3,32 +3,34 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Installment;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class InstallmentPolicy
 {
+    use HandlesAuthorization;
+
     public function viewAny(User $user): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('view_any_installment') || $user->hasRole('super_admin');
     }
 
-    public function view(User $user, Installment $model): bool
+    public function view(User $user, $model = null): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('view_installment') || $user->hasRole('super_admin');
     }
 
     public function create(User $user): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('create_installment') || $user->hasRole('super_admin');
     }
 
-    public function update(User $user, Installment $model): bool
+    public function update(User $user, $model = null): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('update_installment') || $user->hasRole('super_admin');
     }
 
-    public function delete(User $user, Installment $model): bool
+    public function delete(User $user, $model = null): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('delete_installment') || $user->hasRole('super_admin');
     }
 }

@@ -3,32 +3,34 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Testimonial;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class TestimonialPolicy
 {
+    use HandlesAuthorization;
+
     public function viewAny(User $user): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('view_any_testimonial') || $user->hasRole('super_admin');
     }
 
-    public function view(User $user, Testimonial $model): bool
+    public function view(User $user, $model = null): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('view_testimonial') || $user->hasRole('super_admin');
     }
 
     public function create(User $user): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('create_testimonial') || $user->hasRole('super_admin');
     }
 
-    public function update(User $user, Testimonial $model): bool
+    public function update(User $user, $model = null): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('update_testimonial') || $user->hasRole('super_admin');
     }
 
-    public function delete(User $user, Testimonial $model): bool
+    public function delete(User $user, $model = null): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('delete_testimonial') || $user->hasRole('super_admin');
     }
 }

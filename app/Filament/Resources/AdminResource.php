@@ -69,6 +69,11 @@ class AdminResource extends Resource
                     ->default(true),
                 Forms\Components\Hidden::make('type')
                     ->default('admin'),
+                Forms\Components\Select::make('roles')
+                    ->multiple()
+                    ->relationship('roles', 'name')
+                    ->preload()
+                    ->label('الصلاحيات المخصصة (Roles)'),
             ]);
     }
 
@@ -120,10 +125,5 @@ class AdminResource extends Resource
             'create' => Pages\CreateAdmin::route('/create'),
             'edit' => Pages\EditAdmin::route('/{record}/edit'),
         ];
-    }
-
-    public static function canViewAny(): bool
-    {
-        return auth()->user()?->type === 'admin';
     }
 }

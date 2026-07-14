@@ -3,32 +3,34 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\AcademyInfo;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class AcademyInfoPolicy
 {
+    use HandlesAuthorization;
+
     public function viewAny(User $user): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('view_any_academy_info') || $user->hasRole('super_admin');
     }
 
-    public function view(User $user, AcademyInfo $model): bool
+    public function view(User $user, $model = null): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('view_academy_info') || $user->hasRole('super_admin');
     }
 
     public function create(User $user): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('create_academy_info') || $user->hasRole('super_admin');
     }
 
-    public function update(User $user, AcademyInfo $model): bool
+    public function update(User $user, $model = null): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('update_academy_info') || $user->hasRole('super_admin');
     }
 
-    public function delete(User $user, AcademyInfo $model): bool
+    public function delete(User $user, $model = null): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('delete_academy_info') || $user->hasRole('super_admin');
     }
 }

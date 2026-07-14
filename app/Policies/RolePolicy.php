@@ -5,32 +5,32 @@ namespace App\Policies;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class GroupPolicy
+class RolePolicy
 {
     use HandlesAuthorization;
 
     public function viewAny(User $user): bool
     {
-        return $user->hasPermissionTo('view_any_group') || $user->hasRole('super_admin');
+        return $user->hasPermissionTo('view_any_role') || $user->hasRole('super_admin');
     }
 
     public function view(User $user, $model = null): bool
     {
-        return $user->hasPermissionTo('view_group') || $user->hasRole('super_admin');
+        return $user->hasPermissionTo('view_role') || $user->hasRole('super_admin');
     }
 
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo('create_group') || $user->hasRole('super_admin');
+        return $user->hasPermissionTo('create_role') || $user->hasRole('super_admin');
     }
 
     public function update(User $user, $model = null): bool
     {
-        return $user->hasPermissionTo('update_group') || $user->hasRole('super_admin');
+        return $user->hasPermissionTo('update_role') || $user->hasRole('super_admin');
     }
 
     public function delete(User $user, $model = null): bool
     {
-        return $user->hasPermissionTo('delete_group') || $user->hasRole('super_admin');
+        return $user->hasPermissionTo('delete_role') || $user->hasRole('super_admin');
     }
 }

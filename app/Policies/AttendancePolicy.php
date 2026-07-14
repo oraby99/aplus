@@ -3,44 +3,34 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Attendance;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class AttendancePolicy
 {
+    use HandlesAuthorization;
+
     public function viewAny(User $user): bool
     {
-        return in_array($user->type, ['admin', 'teacher']);
+        return $user->hasPermissionTo('view_any_attendance') || $user->hasRole('super_admin');
     }
 
-    public function view(User $user, Attendance $model): bool
+    public function view(User $user, $model = null): bool
     {
-        if ($user->type === 'admin') {
-            return true;
-        }
-        
-        return $user->type === 'teacher' && $model->classSession?->group?->teacher_id === $user->id;
+        return $user->hasPermissionTo('view_attendance') || $user->hasRole('super_admin');
     }
 
     public function create(User $user): bool
     {
-        return in_array($user->type, ['admin', 'teacher']);
+        return $user->hasPermissionTo('create_attendance') || $user->hasRole('super_admin');
     }
 
-    public function update(User $user, Attendance $model): bool
+    public function update(User $user, $model = null): bool
     {
-        if ($user->type === 'admin') {
-            return true;
-        }
-        
-        return $user->type === 'teacher' && $model->classSession?->group?->teacher_id === $user->id;
+        return $user->hasPermissionTo('update_attendance') || $user->hasRole('super_admin');
     }
 
-    public function delete(User $user, Attendance $model): bool
+    public function delete(User $user, $model = null): bool
     {
-        if ($user->type === 'admin') {
-            return true;
-        }
-        
-        return $user->type === 'teacher' && $model->classSession?->group?->teacher_id === $user->id;
+        return $user->hasPermissionTo('delete_attendance') || $user->hasRole('super_admin');
     }
 }

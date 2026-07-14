@@ -3,45 +3,34 @@
 namespace App\Policies;
 
 use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
 {
+    use HandlesAuthorization;
+
     public function viewAny(User $user): bool
     {
-        return in_array($user->type, ['admin', 'teacher']);
+        return $user->hasPermissionTo('view_any_user') || $user->hasRole('super_admin');
     }
 
-    public function view(User $user, User $model): bool
+    public function view(User $user, $model = null): bool
     {
-        if ($user->type === 'admin') {
-            return true;
-        }
-        
-        if ($user->type === 'teacher') {
-            return $model->type === 'student' || $model->id === $user->id;
-        }
-        
-        return false;
+        return $user->hasPermissionTo('view_user') || $user->hasRole('super_admin');
     }
 
     public function create(User $user): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('create_user') || $user->hasRole('super_admin');
     }
 
-    public function update(User $user, User $model): bool
+    public function update(User $user, $model = null): bool
     {
-        if ($user->type === 'admin') {
-            return true;
-        }
-        
-        // Teachers can only update their own profile info
-        return $user->type === 'teacher' && $model->id === $user->id;
+        return $user->hasPermissionTo('update_user') || $user->hasRole('super_admin');
     }
 
-    public function delete(User $user, User $model): bool
+    public function delete(User $user, $model = null): bool
     {
-        // Prevent deleting super admin or current logged in user
-        return $user->type === 'admin' && $model->id !== 1 && $model->id !== $user->id;
+        return $user->hasPermissionTo('delete_user') || $user->hasRole('super_admin');
     }
 }

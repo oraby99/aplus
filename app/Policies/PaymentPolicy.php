@@ -3,32 +3,34 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Payment;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PaymentPolicy
 {
+    use HandlesAuthorization;
+
     public function viewAny(User $user): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('view_any_payment') || $user->hasRole('super_admin');
     }
 
-    public function view(User $user, Payment $model): bool
+    public function view(User $user, $model = null): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('view_payment') || $user->hasRole('super_admin');
     }
 
     public function create(User $user): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('create_payment') || $user->hasRole('super_admin');
     }
 
-    public function update(User $user, Payment $model): bool
+    public function update(User $user, $model = null): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('update_payment') || $user->hasRole('super_admin');
     }
 
-    public function delete(User $user, Payment $model): bool
+    public function delete(User $user, $model = null): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('delete_payment') || $user->hasRole('super_admin');
     }
 }

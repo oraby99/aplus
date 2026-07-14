@@ -3,32 +3,34 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Competition;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CompetitionPolicy
 {
+    use HandlesAuthorization;
+
     public function viewAny(User $user): bool
     {
-        return in_array($user->type, ['admin', 'teacher']);
+        return $user->hasPermissionTo('view_any_competition') || $user->hasRole('super_admin');
     }
 
-    public function view(User $user, Competition $model): bool
+    public function view(User $user, $model = null): bool
     {
-        return in_array($user->type, ['admin', 'teacher']);
+        return $user->hasPermissionTo('view_competition') || $user->hasRole('super_admin');
     }
 
     public function create(User $user): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('create_competition') || $user->hasRole('super_admin');
     }
 
-    public function update(User $user, Competition $model): bool
+    public function update(User $user, $model = null): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('update_competition') || $user->hasRole('super_admin');
     }
 
-    public function delete(User $user, Competition $model): bool
+    public function delete(User $user, $model = null): bool
     {
-        return $user->type === 'admin';
+        return $user->hasPermissionTo('delete_competition') || $user->hasRole('super_admin');
     }
 }
