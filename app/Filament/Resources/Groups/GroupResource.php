@@ -41,6 +41,10 @@ class GroupResource extends Resource
         $query = parent::getEloquentQuery();
         if (auth()->user()?->type === 'teacher') {
             return $query->where('teacher_id', auth()->id());
+        } elseif (auth()->user()?->type === 'student') {
+            return $query->whereHas('enrollments', function ($q) {
+                $q->where('student_id', auth()->id());
+            });
         }
         return $query;
     }
@@ -68,6 +72,7 @@ class GroupResource extends Resource
             'index' => ListGroups::route('/'),
             'create' => CreateGroup::route('/create'),
             'edit' => EditGroup::route('/{record}/edit'),
+            'classroom' => \App\Filament\Resources\Groups\Pages\GroupClassroom::route('/{record}/classroom'),
         ];
     }
 }

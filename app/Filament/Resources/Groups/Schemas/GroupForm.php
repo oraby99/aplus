@@ -29,6 +29,19 @@ class GroupForm
                     ->default(15),
                 TextInput::make('schedule')
                     ->label('الجدول'),
+                \Filament\Schemas\Components\Section::make('معلومات Zoom')
+                    ->schema([
+                        TextInput::make('zoom_link')
+                            ->label('رابط Zoom')
+                            ->url()
+                            ->maxLength(255),
+                        TextInput::make('zoom_meeting_id')
+                            ->label('رقم الاجتماع (ID)')
+                            ->maxLength(255),
+                        TextInput::make('zoom_password')
+                            ->label('كلمة المرور')
+                            ->maxLength(255),
+                    ])->columns(3),
             ]);
     }
 }

@@ -47,6 +47,11 @@ class GroupsTable
                 //
             ])
             ->recordActions([
+                \Filament\Actions\Action::make('classroom')
+                    ->label('الفصل الافتراضي')
+                    ->icon('heroicon-o-video-camera')
+                    ->color('success')
+                    ->url(fn (\App\Models\Group $record): string => \App\Filament\Resources\Groups\GroupResource::getUrl('classroom', ['record' => $record])),
                 EditAction::make(),
                 DeleteAction::make(),
             ])

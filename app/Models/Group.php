@@ -29,4 +29,14 @@ class Group extends Model
     {
         return $this->hasMany(Enrollment::class);
     }
+
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'enrollments', 'group_id', 'student_id');
+    }
+
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class);
+    }
 }
