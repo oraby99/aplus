@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" class="overflow-x-hidden">
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}" class="overflow-x-hidden">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,18 +31,23 @@
 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center gap-12">
-                    <a href="/" class="text-slate-800 hover:text-blue-600 font-extrabold text-lg transition-colors">الرئيسية</a>
-                    <a href="/courses" class="text-slate-600 hover:text-blue-600 font-extrabold text-lg transition-colors">كورساتنا</a>
-                    <a href="/#about" class="text-slate-600 hover:text-blue-600 font-extrabold text-lg transition-colors">من نحن</a>
+                    <a href="/" class="text-slate-800 hover:text-blue-600 font-extrabold text-lg transition-colors">{{ __('الرئيسية') }}</a>
+                    <a href="/courses" class="text-slate-600 hover:text-blue-600 font-extrabold text-lg transition-colors">{{ __('كورساتنا') }}</a>
+                    <a href="/#about" class="text-slate-600 hover:text-blue-600 font-extrabold text-lg transition-colors">{{ __('من نحن') }}</a>
                 </div>
 
-                <!-- Desktop CTA Button -->
+                <!-- Desktop CTA Button & Lang Switcher -->
                 <div class="hidden md:flex items-center gap-3">
+                    @if(app()->getLocale() == 'ar')
+                        <a href="/lang/en" class="text-slate-600 hover:text-blue-600 font-bold px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors">English</a>
+                    @else
+                        <a href="/lang/ar" class="text-slate-600 hover:text-blue-600 font-bold px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors">عربي</a>
+                    @endif
                     <button onclick="document.getElementById('trial-modal').classList.remove('hidden'); document.getElementById('trial-modal').classList.add('flex');" class="bg-pink-500 hover:bg-pink-600 text-white font-extrabold px-6 py-3 rounded-full shadow-lg shadow-pink-500/20 transition-all hover:-translate-y-1 hover:scale-105 text-base">
-                        حصة تجريبية مجانية 🚀
+                        {{ __('حصة تجريبية مجانية') }} 🚀
                     </button>
                     <a href="/contact" class="bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-bold px-6 py-3 rounded-full shadow-lg shadow-yellow-400/40 transition-all hover:-translate-y-1 hover:scale-105 text-base">
-                        تواصل معنا
+                        {{ __('تواصل معنا') }}
                     </a>
                 </div>
 
@@ -59,14 +64,19 @@
             <!-- Mobile Dropdown Menu -->
             <div id="mobile-menu" class="md:hidden hidden overflow-hidden transition-all duration-300">
                 <div class="px-6 pb-6 flex flex-col gap-4 border-t border-sky-100 pt-4">
-                    <a href="/" class="text-slate-800 font-bold text-xl py-2 border-b border-sky-50 hover:text-blue-600 transition-colors">الرئيسية</a>
-                    <a href="/courses" class="text-slate-700 font-bold text-xl py-2 border-b border-sky-50 hover:text-blue-600 transition-colors">كورساتنا</a>
-                    <a href="/#about" class="text-slate-700 font-bold text-xl py-2 border-b border-sky-50 hover:text-blue-600 transition-colors">من نحن</a>
+                    <a href="/" class="text-slate-800 font-bold text-xl py-2 border-b border-sky-50 hover:text-blue-600 transition-colors">{{ __('الرئيسية') }}</a>
+                    <a href="/courses" class="text-slate-700 font-bold text-xl py-2 border-b border-sky-50 hover:text-blue-600 transition-colors">{{ __('كورساتنا') }}</a>
+                    <a href="/#about" class="text-slate-700 font-bold text-xl py-2 border-b border-sky-50 hover:text-blue-600 transition-colors">{{ __('من نحن') }}</a>
+                    @if(app()->getLocale() == 'ar')
+                        <a href="/lang/en" class="text-slate-700 font-bold text-xl py-2 border-b border-sky-50 hover:text-blue-600 transition-colors">English</a>
+                    @else
+                        <a href="/lang/ar" class="text-slate-700 font-bold text-xl py-2 border-b border-sky-50 hover:text-blue-600 transition-colors">عربي</a>
+                    @endif
                     <button onclick="document.getElementById('trial-modal').classList.remove('hidden'); document.getElementById('trial-modal').classList.add('flex'); toggleMobileMenu();" class="mt-2 bg-pink-500 hover:bg-pink-600 text-white font-extrabold px-6 py-3 rounded-full shadow-md text-center transition-colors text-base">
-                        حصة تجريبية مجانية 🚀
+                        {{ __('حصة تجريبية مجانية') }} 🚀
                     </button>
                     <a href="/contact" class="bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-bold px-6 py-3 rounded-full shadow-md text-center transition-colors text-base">
-                        تواصل معنا
+                        {{ __('تواصل معنا') }}
                     </a>
                 </div>
             </div>
@@ -119,15 +129,15 @@
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="md:col-span-2 space-y-4 text-right">
-                    <div class="flex items-center gap-2 justify-start">
+                <div class="md:col-span-2 space-y-4 {{ app()->getLocale() == 'ar' ? 'text-right' : 'text-left' }}">
+                    <div class="flex items-center gap-2 {{ app()->getLocale() == 'ar' ? 'justify-start' : 'justify-start' }}">
                         <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-10 w-10">
                         <span class="text-2xl font-black text-blue-600">A+ Academy</span>
                     </div>
                     <p class="text-slate-700 font-bold leading-relaxed text-base">
-                        نهدف إلى إطلاق العنان لإبداع الأطفال وتعزيز مهاراتهم في البرمجة وفهم أساسياتها عن طريق التعليم عن بعد.
+                        {{ __('نهدف إلى إطلاق العنان لإبداع الأطفال وتعزيز مهاراتهم في البرمجة وفهم أساسياتها عن طريق التعليم عن بعد.') }}
                     </p>
-                    <div class="flex gap-4 justify-start">
+                    <div class="flex gap-4 {{ app()->getLocale() == 'ar' ? 'justify-start' : 'justify-start' }}">
                         @if($academyInfo?->facebook_url)
                             <a href="{{ $academyInfo->facebook_url }}" target="_blank" class="w-10 h-10 rounded-full bg-sky-100 flex items-center justify-center text-blue-600 hover:bg-blue-600 hover:text-white transition-colors">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"></path></svg>
@@ -147,16 +157,16 @@
                 </div>
                 
                 <div>
-                    <h3 class="font-black text-xl mb-4 text-blue-700">روابط سريعة</h3>
+                    <h3 class="font-black text-xl mb-4 text-blue-700">{{ __('روابط مهمة') }}</h3>
                     <ul class="space-y-3 text-slate-700 text-base font-bold">
-                        <li><a href="/" class="hover:text-blue-600 transition-colors">الرئيسية</a></li>
-                        <li><a href="/courses" class="hover:text-blue-600 transition-colors">كورساتنا</a></li>
-                        <li><a href="/about" class="hover:text-blue-600 transition-colors">من نحن</a></li>
+                        <li><a href="/" class="hover:text-blue-600 transition-colors">{{ __('الرئيسية') }}</a></li>
+                        <li><a href="/courses" class="hover:text-blue-600 transition-colors">{{ __('كورساتنا') }}</a></li>
+                        <li><a href="/about" class="hover:text-blue-600 transition-colors">{{ __('من نحن') }}</a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h3 class="font-black text-xl mb-4 text-blue-700">تواصل معنا</h3>
+                    <h3 class="font-black text-xl mb-4 text-blue-700">{{ __('تواصل معنا بسرعة') }}</h3>
                     <ul class="space-y-3 text-slate-700 text-base font-bold">
                         <li class="flex items-center gap-2">
                             <span class="text-lg">📞</span> {{ $academyInfo?->phone ?? '01012345678' }}
@@ -181,9 +191,9 @@
                 </div>
             </div>
             
-            <div class="border-t border-sky-100 mt-12 pt-8 text-center text-slate-700 font-bold text-base">
-                &copy; {{ date('Y') }} A+ Academy. جميع الحقوق محفوظة.
-                <span class="mx-2 text-slate-300">|</span>
+            <div class="border-t border-sky-100 mt-12 pt-8 text-center text-slate-700 font-bold text-base flex flex-col md:flex-row justify-center items-center gap-2">
+                &copy; {{ date('Y') }} A+ Academy. {{ __('جميع الحقوق محفوظة') }}
+                <span class="hidden md:inline mx-2 text-slate-300">|</span>
                 <span class="font-extrabold text-blue-700 text-lg">Engineer Mahmoud Saad</span>
             </div>
         </div>
@@ -194,7 +204,7 @@
         <div class="relative group">
             <!-- Tooltip Message -->
             <div class="absolute bottom-full left-0 mb-4 bg-green-600 px-4 py-2 rounded-2xl rounded-bl-none shadow-xl border-2 border-green-700 text-sm font-bold text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform origin-bottom-left group-hover:-translate-y-2 pointer-events-none">
-                احجز حصتك التجريبية مجاناً! 🚀
+                {{ __('احجز حصتك التجريبية مجاناً! 🚀') }}
                 <div class="absolute -bottom-2 left-0 w-3 h-3 bg-green-600 border-b-2 border-r-2 border-green-700 transform rotate-45 translate-x-4"></div>
             </div>
             
@@ -213,47 +223,48 @@
     <!-- Free Trial Booking Modal (Global) -->
     <div id="trial-modal" class="fixed inset-0 z-[100] hidden items-center justify-center">
         <div class="absolute inset-0 bg-slate-800/60 backdrop-blur-sm" onclick="document.getElementById('trial-modal').classList.add('hidden'); document.getElementById('trial-modal').classList.remove('flex');"></div>
-        <div class="bg-white rounded-[2rem] p-8 md:p-10 max-w-lg w-full relative z-10 text-right m-4 transform transition-all border-4 border-yellow-400 shadow-2xl">
-            <button onclick="document.getElementById('trial-modal').classList.add('hidden'); document.getElementById('trial-modal').classList.remove('flex');" class="absolute top-4 left-4 text-slate-400 hover:text-red-500 transition-colors">
+        <div class="bg-white rounded-[2rem] p-8 md:p-10 max-w-lg w-full relative z-10 {{ app()->getLocale() == 'ar' ? 'text-right' : 'text-left' }} m-4 transform transition-all border-4 border-yellow-400 shadow-2xl">
+            <button onclick="document.getElementById('trial-modal').classList.add('hidden'); document.getElementById('trial-modal').classList.remove('flex');" class="absolute top-4 {{ app()->getLocale() == 'ar' ? 'left-4' : 'right-4' }} text-slate-400 hover:text-red-500 transition-colors">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
             
             <div class="text-center mb-6">
                 <span class="text-5xl block mb-2">🚀</span>
-                <h4 class="text-3xl font-black text-blue-900">حجز حصة تجريبية مجانية</h4>
-                <p class="text-slate-600 font-bold text-sm mt-1">سجل بيانات بطلكم الصغير لتأكيد موعده معنا</p>
+                <h4 class="text-3xl font-black text-blue-900">{{ __('حجز حصة تجريبية مجانية') }}</h4>
+                <p class="text-slate-600 font-bold text-sm mt-1">{{ __('سجل بيانات بطلكم الصغير لتأكيد موعده معنا') }}</p>
             </div>
             
             <form action="/book-trial" method="POST" class="space-y-4">
                 @csrf
                 <div>
-                    <label class="block text-sm font-black text-slate-800 mb-2">اسم الطفل</label>
-                    <input type="text" name="student_name" required class="w-full px-4 py-3 bg-slate-50 border-2 border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-all text-right font-bold text-slate-800 text-sm" placeholder="الاسم ثلاثي">
+                    <label class="block text-sm font-black text-slate-800 mb-2">{{ __('اسم الطفل') }}</label>
+                    <input type="text" name="student_name" required class="w-full px-4 py-3 bg-slate-50 border-2 border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-all {{ app()->getLocale() == 'ar' ? 'text-right' : 'text-left' }} font-bold text-slate-800 text-sm" placeholder="{{ __('الاسم ثلاثي') }}">
                 </div>
                 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-black text-slate-800 mb-2">عمر الطفل</label>
-                        <input type="number" name="age" min="3" max="18" required class="w-full px-4 py-3 bg-slate-50 border-2 border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-all text-right font-bold text-slate-800 text-sm" placeholder="مثال: 8">
+                        <label class="block text-sm font-black text-slate-800 mb-2">{{ __('عمر الطفل') }}</label>
+                        <input type="number" name="age" min="3" max="18" required class="w-full px-4 py-3 bg-slate-50 border-2 border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-all {{ app()->getLocale() == 'ar' ? 'text-right' : 'text-left' }} font-bold text-slate-800 text-sm" placeholder="{{ __('مثال: 8') }}">
                     </div>
                     <div>
-                        <label class="block text-sm font-black text-slate-800 mb-2">تاريخ الجلسة المفضل</label>
-                        <input type="date" name="session_date" required class="w-full px-4 py-3 bg-slate-50 border-2 border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-all text-right font-bold text-slate-800 text-sm">
+                        <label class="block text-sm font-black text-slate-800 mb-2">{{ __('تاريخ الجلسة المفضل') }}</label>
+                        <input type="date" name="session_date" required class="w-full px-4 py-3 bg-slate-50 border-2 border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-all {{ app()->getLocale() == 'ar' ? 'text-right' : 'text-left' }} font-bold text-slate-800 text-sm">
                     </div>
                 </div>
                 
                 <div>
-                    <label class="block text-sm font-black text-slate-800 mb-2">رقم هاتف ولي الأمر (واتساب)</label>
-                    <input type="tel" name="parent_phone" required class="w-full px-4 py-3 bg-slate-50 border-2 border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-all text-right font-bold text-slate-800 text-sm" placeholder="01xxxxxxxxx">
+                    <label class="block text-sm font-black text-slate-800 mb-2">{{ __('رقم هاتف ولي الأمر (واتساب)') }}</label>
+                    <input type="tel" name="parent_phone" required class="w-full px-4 py-3 bg-slate-50 border-2 border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-all {{ app()->getLocale() == 'ar' ? 'text-right' : 'text-left' }} font-bold text-slate-800 text-sm" placeholder="01xxxxxxxxx">
                 </div>
                 
                 <div>
-                    <label class="block text-sm font-black text-slate-800 mb-2">ملاحظات إضافية (اختياري)</label>
-                    <textarea name="notes" rows="2" class="w-full px-4 py-3 bg-slate-50 border-2 border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-all text-right font-bold text-slate-800 text-sm" placeholder="أي ألعاب يفضلها أو مهارات سابقة..."></textarea>
+                    <label class="block text-sm font-black text-slate-800 mb-2">{{ __('ملاحظات إضافية (اختياري)') }}</label>
+                    <textarea name="notes" rows="2" class="w-full px-4 py-3 bg-slate-50 border-2 border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-all {{ app()->getLocale() == 'ar' ? 'text-right' : 'text-left' }} font-bold text-slate-800 text-sm" placeholder="{{ __('أي ألعاب يفضلها أو مهارات سابقة...') }}"></textarea>
                 </div>
                 
                 <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-extrabold py-4 rounded-2xl shadow-lg shadow-blue-600/30 transition-all text-lg flex items-center justify-center gap-2">
-                    احجز الجلسة الآن وانتقل للواتساب 🎯
+                    {{ __('احجز الجلسة الآن وانتقل للواتساب') }} 🎯
+
                 </button>
             </form>
         </div>

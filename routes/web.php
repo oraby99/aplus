@@ -163,4 +163,9 @@ Route::post('/book-trial', function (\Illuminate\Http\Request $request) {
     return redirect($whatsappUrl);
 });
 
-
+Route::get('/lang/{locale}', function ($locale) {
+    if (in_array($locale, ['ar', 'en'])) {
+        session(['locale' => $locale]);
+    }
+    return redirect()->back();
+});

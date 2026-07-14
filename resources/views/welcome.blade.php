@@ -35,28 +35,27 @@
         <div class="text-right hero-text flex flex-col items-end">
             <!-- Small Pink Badge -->
             <div class="inline-flex items-center gap-2 bg-gradient-to-r from-pink-400 to-pink-500 px-6 py-2 rounded-full shadow-lg text-sm font-bold text-white mb-6 border-2 border-white/20">
-                <span>🚀</span> الأكاديمية الأولى لتعليم البرمجة للأطفال
+                <span>🚀</span> {{ __('الأكاديمية الأولى لتعليم البرمجة للأطفال') }}
             </div>
             
             <!-- Main Bubble Text -->
             <h1 class="text-6xl md:text-8xl font-poppins font-extrabold leading-[1.4] pb-4 mb-2 text-white text-center md:text-right w-full" style="text-shadow: 0 8px 0 #1e3a8a, 0 15px 25px rgba(0,0,0,0.3);">
-                نصنع مبرمجي <br>
-                <span class="text-yellow-300" style="text-shadow: 0 8px 0 #b45309, 0 15px 25px rgba(0,0,0,0.3);">المستقبل</span>
+                {!! str_replace('المستقبل', '<span class="text-yellow-300" style="text-shadow: 0 8px 0 #b45309, 0 15px 25px rgba(0,0,0,0.3);">'.__('المستقبل').'</span>', __('نصنع مبرمجي المستقبل')) !!}
             </h1>
             
             <p class="text-lg md:text-xl text-white font-bold mb-10 max-w-lg leading-relaxed text-center md:text-right w-full" style="text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                مكان ممتع يتعلم طفلك البرمجة، تصميم الألعاب، والذكاء الاصطناعي بطريقة تفاعلية ومبتكرة.
+                {{ __('مكان ممتع يتعلم طفلك البرمجة، تصميم الألعاب، والذكاء الاصطناعي بطريقة تفاعلية ومبتكرة.') }}
             </p>
             
             <div class="flex flex-wrap justify-center md:justify-end gap-4 w-full">
                 <!-- Pink Button -->
                 <button onclick="document.getElementById('trial-modal').classList.remove('hidden'); document.getElementById('trial-modal').classList.add('flex');" class="bg-gradient-to-r from-pink-400 to-pink-500 text-white font-extrabold text-2xl px-10 py-5 rounded-full shadow-[0_8px_0_#be185d,0_15px_20px_rgba(0,0,0,0.3)] transition-all hover:-translate-y-2 hover:shadow-[0_12px_0_#be185d,0_20px_25px_rgba(0,0,0,0.4)] active:translate-y-2 active:shadow-[0_0px_0_#be185d,0_5px_10px_rgba(0,0,0,0.4)] flex items-center gap-3">
-                    احجز حصتك التجريبية 🚀
+                    {{ __('احجز حصة تجريبية الآن') }} 🚀
                 </button>
                 
                 <!-- Green Button -->
                 <a href="#game-section" class="bg-gradient-to-r from-green-400 to-green-500 text-white font-extrabold text-xl px-8 py-5 rounded-full shadow-[0_6px_0_#15803d,0_10px_15px_rgba(0,0,0,0.3)] transition-all hover:-translate-y-1 hover:shadow-[0_8px_0_#15803d,0_15px_20px_rgba(0,0,0,0.4)] active:translate-y-1 active:shadow-[0_0px_0_#15803d,0_5px_10px_rgba(0,0,0,0.4)] flex items-center gap-2">
-                    العب معنا 🎮
+                    {{ __('العب معنا 🎮') }}
                 </a>
             </div>
         </div>
@@ -78,7 +77,7 @@
                 <div class="absolute -bottom-8 -left-4 bg-gradient-to-r from-purple-500 to-indigo-500 p-4 rounded-3xl shadow-[0_8px_0_#4c1d95,0_15px_25px_rgba(0,0,0,0.3)] flex flex-col items-center justify-center text-white border-2 border-white/20 w-32 animate-float">
                     <div class="text-3xl bg-white rounded-full p-2 mb-1 shadow-inner">🏆</div>
                     <div class="font-bold text-xl leading-none mt-1">1000+</div>
-                    <div class="text-sm font-bold opacity-90">طفل مبدع</div>
+                    <div class="text-sm font-bold opacity-90">{{ __('طفل مبدع') }}</div>
                 </div>
             </div>
         </div>
@@ -99,22 +98,22 @@
         <!-- Icon 1 -->
         <div class="flex items-center gap-3 justify-center md:justify-start">
             <div class="w-12 h-12 md:w-14 md:h-14 bg-blue-100 rounded-xl flex items-center justify-center text-2xl md:text-3xl shadow-sm flex-shrink-0">💻</div>
-            <div class="font-bold text-slate-800 text-xs md:text-base leading-tight">برمجة سهلة<br>وممتعة</div>
+            <div class="font-bold text-slate-800 text-xs md:text-base leading-tight">{{ __('برمجة سهلة وممتعة') }}</div>
         </div>
         <!-- Icon 2 -->
         <div class="flex items-center gap-3 justify-center md:justify-start">
             <div class="w-12 h-12 md:w-14 md:h-14 bg-indigo-100 rounded-xl flex items-center justify-center text-2xl md:text-3xl shadow-sm flex-shrink-0">🎮</div>
-            <div class="font-bold text-slate-800 text-xs md:text-base leading-tight">تصميم ألعاب<br>تفاعلية</div>
+            <div class="font-bold text-slate-800 text-xs md:text-base leading-tight">{{ __('تصميم ألعاب تفاعلية') }}</div>
         </div>
         <!-- Icon 3 -->
         <div class="flex items-center gap-3 justify-center md:justify-start">
             <div class="w-12 h-12 md:w-14 md:h-14 bg-purple-100 rounded-xl flex items-center justify-center text-2xl md:text-3xl shadow-sm flex-shrink-0">🤖</div>
-            <div class="font-bold text-slate-800 text-xs md:text-base leading-tight">تعلم الذكاء<br>الاصطناعي</div>
+            <div class="font-bold text-slate-800 text-xs md:text-base leading-tight">{{ __('تعلم الذكاء الاصطناعي') }}</div>
         </div>
         <!-- Icon 4 -->
         <div class="flex items-center gap-3 justify-center md:justify-start">
             <div class="w-12 h-12 md:w-14 md:h-14 bg-yellow-100 rounded-xl flex items-center justify-center text-2xl md:text-3xl shadow-sm flex-shrink-0">💡</div>
-            <div class="font-bold text-slate-800 text-xs md:text-base leading-tight">تنمية التفكير<br>والإبداع</div>
+            <div class="font-bold text-slate-800 text-xs md:text-base leading-tight">{{ __('تنمية التفكير والإبداع') }}</div>
         </div>
     </div>
 </div>
@@ -122,10 +121,10 @@
 <!-- 2. Features/About -->
 <section class="pt-32 pb-24 bg-white relative" id="about">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-blue-600 font-extrabold text-xl mb-3 tracking-wide uppercase">من نحن</h2>
-        <h3 class="text-4xl md:text-5xl font-bold text-slate-800 mb-8">اكتشف عالم A+ Academy</h3>
+        <h2 class="text-blue-600 font-extrabold text-xl mb-3 tracking-wide uppercase">{{ __('من نحن') }}</h2>
+        <h3 class="text-4xl md:text-5xl font-bold text-slate-800 mb-8">{{ __('اكتشف عالم A+ Academy') }}</h3>
         <p class="text-lg text-slate-600 max-w-3xl mx-auto mb-12">
-            {{ $academyInfo->about_text ?? 'نحن نؤمن أن كل طفل لديه القدرة على الابتكار. في A+ Academy، لا نعلمهم فقط كتابة الأكواد، بل نعلمهم كيفية التفكير المنهجي وحل المشكلات وصنع ألعابهم الخاصة بدلاً من مجرد لعبها.' }}
+            {{ $academyInfo->about_text ?? __('نحن نؤمن أن كل طفل لديه القدرة على الابتكار. في A+ Academy، لا نعلمهم فقط كتابة الأكواد، بل نعلمهم كيفية التفكير المنهجي وحل المشكلات وصنع ألعابهم الخاصة بدلاً من مجرد لعبها.') }}
         </p>
         
         <div class="relative max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-2xl group cursor-pointer video-container" onclick="document.getElementById('video-modal').classList.remove('hidden'); document.getElementById('video-modal').classList.add('flex');">
@@ -149,10 +148,10 @@
                     @if($academyInfo?->video_url)
                         <video id="promo-video" class="w-full h-full" controls controlsList="nodownload">
                             <source src="{{ asset('storage/' . $academyInfo->video_url) }}" type="video/mp4">
-                            متصفحك لا يدعم تشغيل الفيديو.
+                            {{ __('متصفحك لا يدعم تشغيل الفيديو.') }}
                         </video>
                     @else
-                        <div class="text-white text-lg">لا يوجد فيديو تعريفي حالياً</div>
+                        <div class="text-white text-lg">{{ __('لا يوجد فيديو تعريفي حالياً') }}</div>
                     @endif
                 </div>
             </div>
@@ -172,27 +171,27 @@
     <div class="absolute bottom-4 right-1/4 text-3xl" style="transform: rotate(20deg);">✏️</div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-        <h2 class="font-extrabold text-2xl mb-2" style="color: #d97706;">لماذا تختارنا؟</h2>
-        <h3 class="text-4xl md:text-5xl font-extrabold mb-16" style="color: #1e3a8a; text-shadow: 0 3px 0 rgba(0,0,0,0.15);">بيئة تعليمية مصممة خصيصاً للأطفال</h3>
+        <h2 class="font-extrabold text-2xl mb-2" style="color: #d97706;">{{ __('لماذا تختارنا؟') }}</h2>
+        <h3 class="text-4xl md:text-5xl font-extrabold mb-16" style="color: #1e3a8a; text-shadow: 0 3px 0 rgba(0,0,0,0.15);">{{ __('بيئة تعليمية مصممة خصيصاً للأطفال') }}</h3>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Card 1: Blue - تعليم باللعب -->
             <div class="rounded-[2.5rem] p-8 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-3 cursor-default" style="background: #60a5fa; border: 4px solid #3b82f6;">
                 <div class="text-6xl mb-5">🎮</div>
-                <h4 class="text-2xl font-extrabold text-white mb-4">تعليم باللعب</h4>
-                <p class="text-blue-50 font-semibold text-base leading-relaxed">نستخدم أساليب التلعيب (Gamification) لضمان عدم شعور الطفل بالملل أثناء تعلم المفاهيم المعقدة.</p>
+                <h4 class="text-2xl font-extrabold text-white mb-4">{{ __('تعليم باللعب') }}</h4>
+                <p class="text-blue-50 font-semibold text-base leading-relaxed">{{ __('نستخدم أساليب التلعيب (Gamification) لضمان عدم شعور الطفل بالملل أثناء تعلم المفاهيم المعقدة.') }}</p>
             </div>
             <!-- Card 2: Yellow - مهندسون محترفون (center, taller) -->
             <div class="rounded-[2.5rem] p-8 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-3 cursor-default md:-mt-6" style="background: #fde047; border: 4px solid #eab308;">
                 <div class="text-6xl mb-5">👨‍🏫</div>
-                <h4 class="text-2xl font-extrabold text-slate-800 mb-4">مهندسون محترفون</h4>
-                <p class="text-slate-700 font-semibold text-base leading-relaxed">مدربونا ليسوا فقط مبرمجين، بل خبراء في التعامل مع الأطفال وإيصال المعلومة بطرق بسيطة ومحببة.</p>
+                <h4 class="text-2xl font-extrabold text-slate-800 mb-4">{{ __('مهندسون محترفون') }}</h4>
+                <p class="text-slate-700 font-semibold text-base leading-relaxed">{{ __('مدربونا ليسوا فقط مبرمجين، بل خبراء في التعامل مع الأطفال وإيصال المعلومة بطرق بسيطة ومحببة.') }}</p>
             </div>
             <!-- Card 3: Green - تطبيق عملي -->
             <div class="rounded-[2.5rem] p-8 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-3 cursor-default" style="background: #4ade80; border: 4px solid #22c55e;">
                 <div class="text-6xl mb-5">🚀</div>
-                <h4 class="text-2xl font-extrabold text-white mb-4">تطبيق عملي 100%</h4>
-                <p class="text-green-50 font-semibold text-base leading-relaxed">الطفل يبني مشروعه الخاص من اليوم الأول. سيعود للمنزل وهو فخور بلعبة أو موقع صممه بنفسه.</p>
+                <h4 class="text-2xl font-extrabold text-white mb-4">{{ __('تطبيق عملي 100%') }}</h4>
+                <p class="text-green-50 font-semibold text-base leading-relaxed">{{ __('الطفل يبني مشروعه الخاص من اليوم الأول. سيعود للمنزل وهو فخور بلعبة أو موقع صممه بنفسه.') }}</p>
             </div>
         </div>
     </div>
@@ -215,8 +214,8 @@
     <div class="absolute top-1/2 right-4 text-5xl opacity-20">🗺️</div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <h2 class="font-extrabold text-2xl mb-3" style="color: #fde047;">رحلة البطل 🗺️</h2>
-        <h3 class="text-4xl md:text-5xl font-extrabold mb-16 text-white" style="text-shadow: 0 4px 0 rgba(0,0,0,0.2);">مسار التعلم (Learning Path)</h3>
+        <h2 class="font-extrabold text-2xl mb-3" style="color: #fde047;">{{ __('رحلة البطل 🗺️') }}</h2>
+        <h3 class="text-4xl md:text-5xl font-extrabold mb-16 text-white" style="text-shadow: 0 4px 0 rgba(0,0,0,0.2);">{{ __('مسار التعلم (Learning Path)') }}</h3>
 
         <!-- Adventure Path -->
         <div class="relative">
@@ -237,9 +236,9 @@
                     <!-- Scroll card -->
                     <div class="cursor-pointer group max-w-xs md:max-w-sm flex-grow rounded-3xl p-6 shadow-2xl hover:shadow-yellow-400/30 hover:-translate-y-2 transition-all duration-300 text-right" style="background: #fefce8; border: 3px solid #fde047;" onclick="document.getElementById('modal-{{$course->id}}').classList.remove('hidden'); document.getElementById('modal-{{$course->id}}').classList.add('flex');">
                         <div class="text-4xl mb-3">{{ $courseEmojis[$index % count($courseEmojis)] }}</div>
-                        <h4 class="text-xl font-extrabold mb-2" style="color: #1e3a8a;">{{ $course->title }}</h4>
-                        <p class="text-slate-600 text-sm mb-4">{{ Str::limit($course->description, 60) }}</p>
-                        <span class="inline-block font-extrabold px-5 py-2 rounded-full text-white text-sm" style="background: #2563eb;">استكشف الكورس ←</span>
+                        <h4 class="text-xl font-extrabold mb-2" style="color: #1e3a8a;">{{ __($course->title) }}</h4>
+                        <p class="text-slate-600 text-sm mb-4">{{ Str::limit(__($course->description), 60) }}</p>
+                        <span class="inline-block font-extrabold px-5 py-2 rounded-full text-white text-sm" style="background: #2563eb;">{{ __('استكشف الكورس ←') }}</span>
                     </div>
                 </div>
             </div>
@@ -251,21 +250,21 @@
                     <button onclick="document.getElementById('modal-{{$course->id}}').classList.add('hidden'); document.getElementById('modal-{{$course->id}}').classList.remove('flex');" class="absolute top-4 left-4 text-slate-500 hover:text-red-500">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
-                    <h4 class="text-2xl font-bold text-primary mb-4">{{ $course->title }}</h4>
-                    <p class="text-slate-600 mb-6">{{ $course->description }}</p>
+                    <h4 class="text-2xl font-bold text-primary mb-4">{{ __($course->title) }}</h4>
+                    <p class="text-slate-600 mb-6">{{ __($course->description) }}</p>
                     <div class="bg-sky-50 rounded-xl p-4 mb-6 border border-sky-200">
-                        <p class="font-bold text-slate-800 mb-2">مدة الكورس: <span class="text-primary">{{ $course->duration ?? 'سيتم التحديد قريباً' }}</span></p>
-                        <p class="font-bold text-slate-800">السعر: <span class="text-primary">{{ $course->price }} ج.م</span></p>
+                        <p class="font-bold text-slate-800 mb-2">{{ __('مدة الكورس:') }} <span class="text-primary">{{ $course->duration ?? __('سيتم التحديد قريباً') }}</span></p>
+                        <p class="font-bold text-slate-800">{{ __('السعر:') }} <span class="text-primary">{{ $course->price }} {{ __('ج.م') }}</span></p>
                     </div>
                     
                     @if(count($course->levels) > 0)
                     <div class="mb-6 text-right">
-                        <p class="font-extrabold text-slate-800 mb-3 text-base border-r-4 border-yellow-400 pr-2">مراحل / مستويات الكورس:</p>
+                        <p class="font-extrabold text-slate-800 mb-3 text-base border-r-4 border-yellow-400 pr-2">{{ __('مراحل / مستويات الكورس:') }}</p>
                         <div class="space-y-2">
                             @foreach($course->levels as $level)
                             <div class="flex items-center gap-3 bg-sky-50/50 p-3 rounded-2xl border border-sky-100">
                                 <span class="w-7 h-7 rounded-full bg-blue-600 text-white font-extrabold flex items-center justify-center text-xs shadow-md">{{ $loop->iteration }}</span>
-                                <span class="font-bold text-slate-800 text-sm">{{ $level->name }}</span>
+                                <span class="font-bold text-slate-800 text-sm">{{ __($level->name) }}</span>
                             </div>
                             @endforeach
                         </div>
@@ -273,20 +272,20 @@
                     @endif
 
                     <a href="https://wa.me/{{ \App\Models\AcademyInfo::first()?->formatted_whatsapp_phone ?? '201012345678' }}?text={{ urlencode('مرحباً، أريد الاشتراك في كورس: ' . $course->title) }}" target="_blank" class="block w-full text-center bg-secondary hover:bg-yellow-500 text-white font-bold py-3 rounded-xl transition-colors">
-                        اشترك الآن 🚀
+                        {{ __('اشترك الآن 🚀') }}
                     </a>
                 </div>
             </div>
 
             @empty
-            <div class="text-center text-white/60 text-xl">جاري إضافة الكورسات للمسار... 🗺️</div>
+            <div class="text-center text-white/60 text-xl">{{ __('جاري إضافة الكورسات للمسار... 🗺️') }}</div>
             @endforelse
 
             <!-- Final Treasure -->
             @if(count($courses) > 0)
             <div class="text-center mt-8">
                 <div class="text-7xl animate-bounce" style="animation-duration:2s;">🏆</div>
-                <div class="mt-4 inline-block px-8 py-3 rounded-full font-extrabold text-lg" style="background: #fde047; color: #1e3a8a;">الخطوة الأخيرة - رحلتك اكتملت! 🎉</div>
+                <div class="mt-4 inline-block px-8 py-3 rounded-full font-extrabold text-lg" style="background: #fde047; color: #1e3a8a;">{{ __('الخطوة الأخيرة - رحلتك اكتملت! 🎉') }}</div>
             </div>
             @endif
         </div>
@@ -298,8 +297,8 @@
 <section class="py-24 bg-sky-50 backdrop-blur-md relative overflow-hidden">
     <div class="absolute left-10 top-10 w-48 h-48 bg-purple-200 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob"></div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-blue-600 font-extrabold text-xl mb-3 tracking-wide uppercase">من سيعلم طفلك؟</h2>
-        <h3 class="text-4xl md:text-5xl font-bold text-slate-800 mb-16">تعرف على مدربينا</h3>
+        <h2 class="text-blue-600 font-extrabold text-xl mb-3 tracking-wide uppercase">{{ __('من سيعلم طفلك؟') }}</h2>
+        <h3 class="text-4xl md:text-5xl font-bold text-slate-800 mb-16">{{ __('تعرف على مدربينا') }}</h3>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             @forelse($teachers as $teacher)
@@ -310,23 +309,23 @@
                         <div class="w-32 h-32 bg-primary/10 rounded-full mb-6 flex items-center justify-center">
                             <svg class="w-16 h-16 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                         </div>
-                        <h4 class="text-2xl font-bold text-slate-800">{{ $teacher->name }}</h4>
-                        <p class="text-primary font-bold mt-2">مهندس برمجيات</p>
+                        <h4 class="text-2xl font-bold text-slate-800">{{ __($teacher->name) }}</h4>
+                        <p class="text-primary font-bold mt-2">{{ __('مهندس برمجيات') }}</p>
                     </div>
                     <!-- Back -->
                     <div class="absolute inset-0 backface-hidden rotate-y-180 bg-primary text-white rounded-3xl p-8 flex flex-col items-center justify-center shadow-xl">
-                        <h4 class="text-2xl font-bold mb-4">{{ $teacher->name }}</h4>
+                        <h4 class="text-2xl font-bold mb-4">{{ __($teacher->name) }}</h4>
                         <p class="text-blue-100 text-center text-sm leading-relaxed mb-6">
-                            متخصص في تعليم الأطفال كيفية بناء تطبيقات تفاعلية وتحويل خيالهم إلى حقيقة برمجية.
+                            {{ __('متخصص في تعليم الأطفال كيفية بناء تطبيقات تفاعلية وتحويل خيالهم إلى حقيقة برمجية.') }}
                         </p>
                         <a href="https://wa.me/{{ \App\Models\AcademyInfo::first()?->formatted_whatsapp_phone ?? '201012345678' }}?text={{ urlencode('مرحباً، أريد التواصل مع المهندس: ' . $teacher->name) }}" target="_blank" class="bg-secondary text-white font-bold px-6 py-2 rounded-full text-sm hover:bg-yellow-400 transition-colors">
-                            تواصل معه
+                            {{ __('تواصل معه') }}
                         </a>
                     </div>
                 </div>
             </div>
             @empty
-            <div class="col-span-3 text-center text-slate-500">سيتم إضافة المهندسين قريباً...</div>
+            <div class="col-span-3 text-center text-slate-500">{{ __('سيتم إضافة المهندسين قريباً...') }}</div>
             @endforelse
         </div>
     </div>
@@ -336,8 +335,8 @@
 <section class="py-24 bg-sky-100 relative overflow-hidden backdrop-blur-md">
     
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <h2 class="text-blue-600 font-extrabold text-xl mb-3 tracking-wide uppercase">إنجازات أبطالنا</h2>
-        <h3 class="text-4xl md:text-5xl font-bold mb-16 text-slate-900">مشاريع الطلاب</h3>
+        <h2 class="text-blue-600 font-extrabold text-xl mb-3 tracking-wide uppercase">{{ __('إنجازات أبطالنا') }}</h2>
+        <h3 class="text-4xl md:text-5xl font-bold mb-16 text-slate-900">{{ __('مشاريع الطلاب') }}</h3>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse($projects as $project)
@@ -350,17 +349,17 @@
                 </div>
                 @endif
                 <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                    <h4 class="text-xl font-black text-white mb-1">{{ $project->title }}</h4>
-                    <p class="text-yellow-300 font-bold text-sm mb-3">بواسطة: {{ $project->student->name }}</p>
+                    <h4 class="text-xl font-black text-white mb-1">{{ __($project->title) }}</h4>
+                    <p class="text-yellow-300 font-bold text-sm mb-3">{{ __('بواسطة:') }} {{ __($project->student->name) }}</p>
                     @if($project->project_url)
                     <a href="{{ $project->project_url }}" target="_blank" class="text-primary hover:text-white transition-colors text-sm font-bold flex items-center gap-1">
-                        شاهد المشروع <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        {{ __('شاهد المشروع') }} <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                     </a>
                     @endif
                 </div>
             </div>
             @empty
-            <div class="col-span-3 text-center text-slate-500 py-12 border border-dashed border-sky-200 rounded-3xl">لا توجد مشاريع مضافة حتى الآن.</div>
+            <div class="col-span-3 text-center text-slate-500 py-12 border border-dashed border-sky-200 rounded-3xl">{{ __('لا توجد مشاريع مضافة حتى الآن.') }}</div>
             @endforelse
         </div>
     </div>
@@ -370,8 +369,8 @@
 @if(count($competitions) > 0)
 <section class="py-24 bg-sky-50 backdrop-blur-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-secondary font-bold mb-2">تحديات مستمرة</h2>
-        <h3 class="text-4xl md:text-5xl font-bold text-slate-800 mb-16">المسابقات والهاكاثون</h3>
+        <h2 class="text-secondary font-bold mb-2">{{ __('تحديات مستمرة') }}</h2>
+        <h3 class="text-4xl md:text-5xl font-bold text-slate-800 mb-16">{{ __('المسابقات والهاكاثون') }}</h3>
         
         <div class="max-w-4xl mx-auto">
             @foreach($competitions as $competition)
@@ -379,13 +378,13 @@
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
                         <div class="inline-block px-3 py-1 rounded-full text-xs font-bold mb-3 {{ $competition->status == 'ongoing' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700' }}">
-                            {{ $competition->status == 'ongoing' ? 'جارية الآن' : 'قادمة قريباً' }}
+                            {{ $competition->status == 'ongoing' ? __('جارية الآن') : __('قادمة قريباً') }}
                         </div>
-                        <h4 class="text-2xl font-bold text-slate-800">{{ $competition->title }}</h4>
-                        <p class="text-slate-600 mt-2">{{ Str::limit($competition->description, 100) }}</p>
+                        <h4 class="text-2xl font-bold text-slate-800">{{ __($competition->title) }}</h4>
+                        <p class="text-slate-600 mt-2">{{ Str::limit(__($competition->description), 100) }}</p>
                     </div>
                     <div class="text-right md:text-left bg-sky-50 p-4 rounded-xl min-w-[200px]">
-                        <p class="text-sm text-slate-500 font-bold mb-1">يبدأ في:</p>
+                        <p class="text-sm text-slate-500 font-bold mb-1">{{ __('يبدأ في:') }}</p>
                         <p class="text-primary font-bold text-lg">{{ \Carbon\Carbon::parse($competition->start_date)->format('Y-m-d') }}</p>
                     </div>
                 </div>
@@ -399,14 +398,14 @@
 <!-- 8. Testimonials -->
 <section class="py-24 bg-sky-50 backdrop-blur-md overflow-hidden" id="testimonials-section">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-blue-600 font-extrabold text-xl mb-3 tracking-wide uppercase">قصص النجاح</h2>
-        <h3 class="text-4xl md:text-5xl font-bold text-slate-800 mb-16">آراء أولياء الأمور</h3>
+        <h2 class="text-blue-600 font-extrabold text-xl mb-3 tracking-wide uppercase">{{ __('قصص النجاح') }}</h2>
+        <h3 class="text-4xl md:text-5xl font-bold text-slate-800 mb-16">{{ __('آراء أولياء الأمور') }}</h3>
         
         <!-- Add Testimonial Button -->
         <div class="mb-12">
             <button onclick="document.getElementById('testimonial-modal').classList.remove('hidden'); document.getElementById('testimonial-modal').classList.add('flex');" class="bg-primary hover:bg-blue-600 text-white font-bold text-lg px-8 py-4 rounded-full shadow-lg shadow-primary/30 transition-transform hover:-translate-y-1 inline-flex items-center gap-2">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                أضف تقييمك
+                {{ __('أضف تقييمك') }}
             </button>
             
             @if(session('testimonial_success'))
@@ -433,19 +432,19 @@
                     @for($i = 0; $i < $score; $i++) ★ @endfor
                     @for($i = 0; $i < (5 - $score); $i++) <span class="text-slate-600">★</span> @endfor
                 </div>
-                <p class="text-slate-600 mb-6 italic">"{{ $item->feedback ?? 'أكاديمية رائعة ومستوى تعليمي متميز!' }}"</p>
+                <p class="text-slate-600 mb-6 italic">"{{ $item->feedback ?? __('أكاديمية رائعة ومستوى تعليمي متميز!') }}"</p>
                 <div class="flex items-center gap-4">
                     <div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold">
                         {{ mb_substr($item->name ?? $item->student?->name ?? 'ط', 0, 1) }}
                     </div>
                     <div>
-                        <h5 class="font-bold text-slate-800">{{ $item->name ?? $item->student?->name ?? 'طالب' }}</h5>
-                        <p class="text-sm text-slate-500">{{ $item->course_name ?? $item->course?->title ?? 'كورس البرمجة' }}</p>
+                        <h5 class="font-bold text-slate-800">{{ $item->name ?? $item->student?->name ?? __('طالب') }}</h5>
+                        <p class="text-sm text-slate-500">{{ $item->course_name ?? $item->course?->title ?? __('كورس البرمجة') }}</p>
                     </div>
                 </div>
             </div>
             @empty
-            <div class="text-center text-slate-500 w-full">كن أول من يضيف تقييماً للأكاديمية!</div>
+            <div class="text-center text-slate-500 w-full">{{ __('كن أول من يضيف تقييماً للأكاديمية!') }}</div>
             @endforelse
         </div>
         
@@ -457,36 +456,36 @@
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
                 
-                <h4 class="text-2xl font-bold text-white mb-2">أضف تقييمك</h4>
-                <p class="text-slate-300 mb-6">رأيك يهمنا ويساعدنا في تطوير الأكاديمية.</p>
+                <h4 class="text-2xl font-bold text-white mb-2">{{ __('أضف تقييمك') }}</h4>
+                <p class="text-slate-300 mb-6">{{ __('رأيك يهمنا ويساعدنا في تطوير الأكاديمية.') }}</p>
                 
                 <form action="/testimonials" method="POST" class="space-y-4">
                     @csrf
                     <div>
-                        <label class="block text-sm font-bold text-slate-600 mb-1">الاسم (ولي الأمر أو الطالب)</label>
+                        <label class="block text-sm font-bold text-slate-600 mb-1">{{ __('الاسم (ولي الأمر أو الطالب)') }}</label>
                         <input type="text" name="name" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
                     </div>
                     <div>
-                        <label class="block text-sm font-bold text-slate-600 mb-1">اسم الكورس (اختياري)</label>
+                        <label class="block text-sm font-bold text-slate-600 mb-1">{{ __('اسم الكورس (اختياري)') }}</label>
                         <input type="text" name="course_name" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
                     </div>
                     <div>
-                        <label class="block text-sm font-bold text-slate-600 mb-1">التقييم (النجوم)</label>
+                        <label class="block text-sm font-bold text-slate-600 mb-1">{{ __('التقييم (النجوم)') }}</label>
                         <select name="score" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-secondary font-bold text-lg">
-                            <option value="5" class="text-secondary">★★★★★ (ممتاز)</option>
-                            <option value="4" class="text-secondary">★★★★ (جيد جداً)</option>
-                            <option value="3" class="text-secondary">★★★ (جيد)</option>
-                            <option value="2" class="text-secondary">★★ (مقبول)</option>
-                            <option value="1" class="text-secondary">★ (ضعيف)</option>
+                            <option value="5" class="text-secondary">★★★★★ ({{ __('ممتاز') }})</option>
+                            <option value="4" class="text-secondary">★★★★ ({{ __('جيد جداً') }})</option>
+                            <option value="3" class="text-secondary">★★★ ({{ __('جيد') }})</option>
+                            <option value="2" class="text-secondary">★★ ({{ __('مقبول') }})</option>
+                            <option value="1" class="text-secondary">★ ({{ __('ضعيف') }})</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-bold text-slate-600 mb-1">رأيك (ملاحظاتك)</label>
+                        <label class="block text-sm font-bold text-slate-600 mb-1">{{ __('رأيك (ملاحظاتك)') }}</label>
                         <textarea name="feedback" required rows="3" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"></textarea>
                     </div>
                     
                     <button type="submit" class="w-full bg-primary hover:bg-blue-600 text-white font-bold py-4 rounded-xl transition-colors mt-4">
-                        إرسال التقييم
+                        {{ __('إرسال التقييم') }}
                     </button>
                 </form>
             </div>
@@ -497,30 +496,30 @@
 <!-- 9. Mini Game Section (Catch the Bug) -->
 <section class="py-24 bg-sky-100 backdrop-blur-md relative overflow-hidden" id="game-section">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <h2 class="text-blue-600 font-extrabold text-xl mb-3 tracking-wide uppercase">وقت المرح!</h2>
-        <h3 class="text-4xl font-bold mb-6 text-slate-900">لعبة صائد الأخطاء البرمجية (Bugs) 🐛</h3>
-        <p class="text-slate-500 mb-8 max-w-2xl mx-auto">ساعد المهندس في صيد الأخطاء البرمجية (Bugs) التي تظهر على الشاشة قبل أن تهرب! اضغط عليها بسرعة.</p>
+        <h2 class="text-blue-600 font-extrabold text-xl mb-3 tracking-wide uppercase">{{ __('وقت المرح!') }}</h2>
+        <h3 class="text-4xl font-bold mb-6 text-slate-900">{{ __('لعبة صائد الأخطاء البرمجية (Bugs) 🐛') }}</h3>
+        <p class="text-slate-500 mb-8 max-w-2xl mx-auto">{{ __('ساعد المهندس في صيد الأخطاء البرمجية (Bugs) التي تظهر على الشاشة قبل أن تهرب! اضغط عليها بسرعة.') }}</p>
         
         <div class="bg-slate-900 rounded-3xl p-4 md:p-8 max-w-4xl mx-auto shadow-2xl border border-sky-200 relative">
             <div class="flex justify-between items-center mb-4 px-4">
-                <div class="text-xl font-bold">النقاط: <span id="score" class="text-secondary text-3xl">0</span></div>
-                <div class="text-xl font-bold">الوقت: <span id="timer" class="text-primary text-3xl">30</span>ث</div>
+                <div class="text-xl font-bold">{{ __('النقاط:') }} <span id="score" class="text-secondary text-3xl">0</span></div>
+                <div class="text-xl font-bold">{{ __('الوقت:') }} <span id="timer" class="text-primary text-3xl">30</span>{{ __('ث') }}</div>
             </div>
             
             <div id="game-board" class="w-full h-[400px] bg-white rounded-2xl relative overflow-hidden cursor-crosshair border-2 border-sky-200">
                 <!-- Start Overlay -->
                 <div id="game-start-overlay" class="absolute inset-0 bg-sky-100 flex flex-col items-center justify-center z-20">
                     <button id="start-btn" class="bg-primary hover:bg-blue-600 text-white font-bold text-2xl px-10 py-4 rounded-full shadow-lg shadow-primary/50 transition-transform hover:scale-110">
-                        ابدأ اللعبة 🎮
+                        {{ __('ابدأ اللعبة 🎮') }}
                     </button>
                 </div>
                 
                 <!-- Game Over Overlay -->
                 <div id="game-over-overlay" class="absolute inset-0 bg-sky-100 flex flex-col items-center justify-center z-20 hidden">
-                    <h4 class="text-4xl font-bold mb-2">انتهى الوقت!</h4>
-                    <p class="text-xl text-slate-600 mb-6">لقد اصطدت <span id="final-score" class="text-secondary font-bold text-3xl">0</span> Bugs!</p>
+                    <h4 class="text-4xl font-bold mb-2">{{ __('انتهى الوقت!') }}</h4>
+                    <p class="text-xl text-slate-600 mb-6">{{ __('لقد اصطدت') }} <span id="final-score" class="text-secondary font-bold text-3xl">0</span> {{ __('Bugs!') }}</p>
                     <button id="restart-btn" class="bg-secondary hover:bg-yellow-500 text-white font-bold text-xl px-8 py-3 rounded-full shadow-lg transition-transform hover:scale-105">
-                        العب مرة أخرى 🔄
+                        {{ __('العب مرة أخرى 🔄') }}
                     </button>
                 </div>
             </div>
