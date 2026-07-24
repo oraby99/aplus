@@ -10,6 +10,11 @@ class EnrollmentChart extends ChartWidget
     protected ?string $heading = 'مخطط الاشتراكات الطلابية الجديدة شهرياً';
     protected static ?int $sort = 1;
 
+    public static function canView(): bool
+    {
+        return auth()->user()->type === 'admin';
+    }
+
     protected function getData(): array
     {
         $currentYear = date('Y');

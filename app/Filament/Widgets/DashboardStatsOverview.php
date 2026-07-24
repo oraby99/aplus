@@ -12,6 +12,11 @@ class DashboardStatsOverview extends BaseWidget
 {
     protected static ?int $sort = 3;
 
+    public static function canView(): bool
+    {
+        return auth()->user()->type === 'admin';
+    }
+
     protected function getStats(): array
     {
         return [

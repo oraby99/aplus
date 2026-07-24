@@ -10,6 +10,11 @@ class RevenueChart extends ChartWidget
     protected ?string $heading = 'مخطط الإيرادات الشهرية (ج.م)';
     protected static ?int $sort = 2;
 
+    public static function canView(): bool
+    {
+        return auth()->user()->type === 'admin';
+    }
+
     protected function getData(): array
     {
         $currentYear = date('Y');
