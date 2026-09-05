@@ -21,4 +21,12 @@ class Message extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getImageUrlAttribute(): ?string
+    {
+        if (!$this->image_path) {
+            return null;
+        }
+        return asset('storage/' . $this->image_path);
+    }
 }
