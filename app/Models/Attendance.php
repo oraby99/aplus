@@ -18,4 +18,18 @@ class Attendance extends Model
     {
         return $this->belongsTo(User::class, 'student_id');
     }
+
+    public function group(): BelongsTo
+    {
+        return $this->belongsTo(Group::class);
+    }
+
+    protected static function booted(): void
+    {
+        static::saving(function (Attendance $attendance) {
+            if (empty($attendance->group_id) && !empty($attendance->class_session_id)) {
+                $attendance->group_id = $attendance->classSession?->group_id;
+            }
+        });
+    }
 }

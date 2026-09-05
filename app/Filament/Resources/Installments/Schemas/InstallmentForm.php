@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Installments\Schemas;
 
+use App\Models\Payment;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -14,11 +15,20 @@ class InstallmentForm
         return $schema
             ->components([
                 Select::make('payment_id')
-                    ->label('الدفعة')
-                    ->relationship('payment', 'id')
-                    ->required(),
+                    ->label('الدفعة التابع لها القسط')
+                    ->required()
+                    ->searchable()
+                    ->preload()
+                    ->options(function () {
+                        return Payment::with(['student', 'course', 'group'])->get()->mapWithKeys(function ($p) {
+                            $student = $p->student?->name ?? 'طالب غير محدد';
+                            $course = $p->course?->title ?? 'كورس غير محدد';
+                            $group = $p->group ? " [{$p->group->name}]" : '';
+                            return [$p->id => "{$student} - {$course}{$group} (دفعة #{$p->id})"];
+                        });
+                    }),
                 TextInput::make('amount')
-                    ->label('المبلغ')
+                    ->label('مبلغ القسط')
                     ->required()
                     ->numeric()
                     ->prefix('ج.م'),
@@ -26,7 +36,7 @@ class InstallmentForm
                     ->label('تاريخ الاستحقاق')
                     ->required(),
                 DatePicker::make('paid_date')
-                    ->label('تاريخ الدفع'),
+                    ->label('تاريخ الدفع (إذا تم سداده)'),
                 Select::make('status')
                     ->label('الحالة')
                     ->options([

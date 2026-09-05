@@ -70,4 +70,9 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasMany(Project::class, 'student_id');
     }
+
+    public function homeworks(): HasMany
+    {
+        return $this->hasMany(Homework::class, 'student_id');
+    }
 }

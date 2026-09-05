@@ -38,7 +38,10 @@ class AttendanceResource extends Resource
     {
         $query = parent::getEloquentQuery();
         if (auth()->user()?->type === 'teacher') {
-            return $query->whereHas('classSession.group', fn($q) => $q->where('teacher_id', auth()->id()));
+            return $query->where(function ($q) {
+                $q->whereHas('group', fn($sq) => $sq->where('teacher_id', auth()->id()))
+                  ->orWhereHas('classSession.group', fn($sq) => $sq->where('teacher_id', auth()->id()));
+            });
         }
         return $query;
     }
