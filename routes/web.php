@@ -110,7 +110,10 @@ Route::get('/admin/students/{student}/report', function (\App\Models\User $stude
         'attendances.classSession.group',
         'evaluations.course',
         'evaluations.teacher',
-        'certificates.course'
+        'certificates.course',
+        'payments.course',
+        'payments.group',
+        'payments.installments'
     ]);
     
     return view('student_report', compact('student'));

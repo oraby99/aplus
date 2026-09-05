@@ -14,7 +14,7 @@ use Filament\Panel;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['name', 'email', 'password', 'type', 'phone', 'is_active', 'age', 'parent_name', 'parent_phone', 'school'])]
+#[Fillable(['name', 'email', 'password', 'type', 'phone', 'is_active', 'total_sessions', 'age', 'parent_name', 'parent_phone', 'school'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable implements FilamentUser
 {
@@ -36,7 +36,47 @@ class User extends Authenticatable implements FilamentUser
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'total_sessions' => 'integer',
         ];
+    }
+
+    // ===== Attendance Tracking Methods (24 Sessions System) =====
+
+    public function getTotalSessionsAttribute(): int
+    {
+        return (int) ($this->attributes['total_sessions'] ?? 24) ?: 24;
+    }
+
+    public function getAttendedSessionsCountAttribute(): int
+    {
+        return $this->attendances()->whereIn('status', ['present', 'late'])->count();
+    }
+
+    public function getPresentSessionsCountAttribute(): int
+    {
+        return $this->attendances()->where('status', 'present')->count();
+    }
+
+    public function getLateSessionsCountAttribute(): int
+    {
+        return $this->attendances()->where('status', 'late')->count();
+    }
+
+    public function getAbsentSessionsCountAttribute(): int
+    {
+        return $this->attendances()->where('status', 'absent')->count();
+    }
+
+    public function getRemainingSessionsCountAttribute(): int
+    {
+        return max(0, $this->total_sessions - $this->attended_sessions_count);
+    }
+
+    public function getAttendancePercentageAttribute(): float
+    {
+        $total = $this->total_sessions;
+        if ($total <= 0) return 0;
+        return min(100, round(($this->attended_sessions_count / $total) * 100, 1));
     }
 
     // ===== Student Relationships =====

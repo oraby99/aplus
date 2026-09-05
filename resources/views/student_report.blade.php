@@ -88,40 +88,78 @@
             </div>
         </div>
 
-        <!-- Attendance Stats & Performance Overview -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            @php
-                $totalSessions = $student->attendances->count();
-                $presentCount = $student->attendances->where('status', 'present')->count();
-                $lateCount = $student->attendances->where('status', 'late')->count();
-                $absentCount = $student->attendances->where('status', 'absent')->count();
-                $attendanceRate = $totalSessions > 0 ? round((($presentCount + $lateCount) / $totalSessions) * 100) : 100;
-                
-                $averageScore = $student->evaluations->count() > 0 ? round($student->evaluations->avg('score')) : null;
-            @endphp
-            <!-- Stat 1 -->
-            <div class="bg-blue-50 p-4 rounded-2xl text-center border border-blue-200">
-                <span class="block text-2xl mb-1">📅</span>
-                <span class="block text-slate-500 font-bold text-xs mb-1">إجمالي الحصص</span>
-                <span class="text-2xl font-black text-blue-900">{{ $totalSessions }}</span>
+        <!-- Attendance Stats & Performance Overview (24 Sessions Tracking) -->
+        @php
+            $totalTargetSessions = $student->total_sessions ?: 24;
+            $presentCount = $student->attendances->where('status', 'present')->count();
+            $lateCount = $student->attendances->where('status', 'late')->count();
+            $attendedCount = $presentCount + $lateCount;
+            $absentCount = $student->attendances->where('status', 'absent')->count();
+            $remainingSessions = max(0, $totalTargetSessions - $attendedCount);
+            $completionRate = $totalTargetSessions > 0 ? min(100, round(($attendedCount / $totalTargetSessions) * 100)) : 0;
+            
+            $averageScore = $student->evaluations->count() > 0 ? round($student->evaluations->avg('score')) : null;
+        @endphp
+
+        <!-- 24-Session Progress Bar Banner -->
+        <div class="bg-gradient-to-r from-sky-50 to-blue-50 border border-sky-200 rounded-3xl p-6 mb-8 text-right">
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-3 mb-3">
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl">🎯</span>
+                    <div>
+                        <h4 class="font-black text-slate-900 text-lg">خطة الـ {{ $totalTargetSessions }} حصة المقررة</h4>
+                        <p class="text-xs text-slate-500 font-bold">متابعة إنجاز وحضور الطفل لكامل المقرر</p>
+                    </div>
+                </div>
+                <div class="text-left">
+                    <span class="text-sm font-bold text-slate-600">نسبة الإنجاز: </span>
+                    <span class="text-xl font-black text-blue-700">{{ $completionRate }}%</span>
+                </div>
             </div>
-            <!-- Stat 2 -->
+            
+            <!-- Progress track -->
+            <div class="w-full bg-slate-200 rounded-full h-5 p-1 border border-slate-300/80 overflow-hidden shadow-inner">
+                <div class="h-full rounded-full transition-all duration-700 bg-gradient-to-r {{ $attendedCount >= $totalTargetSessions ? 'from-red-500 to-rose-600' : ($attendedCount >= ($totalTargetSessions - 4) ? 'from-amber-500 to-orange-500' : 'from-blue-500 to-emerald-500') }}"
+                     style="width: {{ $completionRate }}%;">
+                </div>
+            </div>
+            
+            <div class="flex justify-between items-center text-xs font-extrabold text-slate-500 mt-2">
+                <span>0 حصة (البداية)</span>
+                <span class="text-blue-900 bg-blue-100 px-3 py-1 rounded-full">حضر {{ $attendedCount }} من {{ $totalTargetSessions }} حصة</span>
+                <span>{{ $totalTargetSessions }} حصة (الهدف)</span>
+            </div>
+        </div>
+
+        <!-- 4 KPI Stat Cards -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <!-- Stat 1: Target -->
+            <div class="bg-blue-50 p-4 rounded-2xl text-center border border-blue-200">
+                <span class="block text-2xl mb-1">🎯</span>
+                <span class="block text-slate-500 font-bold text-xs mb-1">الرصيد المقرر</span>
+                <span class="text-2xl font-black text-blue-900">{{ $totalTargetSessions }}</span>
+                <span class="block text-[11px] text-blue-600 font-bold mt-1">حصة تدريبية</span>
+            </div>
+            <!-- Stat 2: Attended -->
             <div class="bg-green-50 p-4 rounded-2xl text-center border border-green-200">
                 <span class="block text-2xl mb-1">✅</span>
-                <span class="block text-slate-500 font-bold text-xs mb-1">نسبة الحضور</span>
-                <span class="text-2xl font-black text-green-900">{{ $attendanceRate }}%</span>
+                <span class="block text-slate-500 font-bold text-xs mb-1">الحصص المحضورة</span>
+                <span class="text-2xl font-black text-green-900">{{ $attendedCount }}</span>
+                <span class="block text-[11px] text-green-700 font-bold mt-1">حاضر: {{ $presentCount }} | تأخير: {{ $lateCount }}</span>
             </div>
-            <!-- Stat 3 -->
+            <!-- Stat 3: Remaining -->
             <div class="bg-amber-50 p-4 rounded-2xl text-center border border-amber-200">
-                <span class="block text-2xl mb-1">📊</span>
-                <span class="block text-slate-500 font-bold text-xs mb-1">متوسط التقييم</span>
-                <span class="text-2xl font-black text-amber-900">{{ $averageScore ? $averageScore . ' / 100' : 'لا يوجد' }}</span>
+                <span class="block text-2xl mb-1">⏳</span>
+                <span class="block text-slate-500 font-bold text-xs mb-1">الحصص المتبقية</span>
+                <span class="text-2xl font-black text-amber-900">{{ $remainingSessions }}</span>
+                <span class="block text-[11px] text-amber-700 font-bold mt-1">حصة متبقية</span>
             </div>
-            <!-- Stat 4 -->
-            <div class="bg-purple-50 p-4 rounded-2xl text-center border border-purple-200">
-                <span class="block text-2xl mb-1">🏆</span>
-                <span class="block text-slate-500 font-bold text-xs mb-1">الشهادات</span>
-                <span class="text-2xl font-black text-purple-900">{{ $student->certificates->count() }}</span>
+            <!-- Stat 4: Absent -->
+            <div class="bg-rose-50 p-4 rounded-2xl text-center border border-rose-200">
+                <span class="block text-2xl mb-1">❌</span>
+                <span class="block text-slate-500 font-bold text-xs mb-1">مرات الغياب</span>
+                <span class="text-2xl font-black text-rose-900">{{ $absentCount }}</span>
+                <span class="block text-[11px] text-rose-700 font-bold mt-1">حصة غياب</span>
             </div>
         </div>
 
@@ -154,6 +192,185 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+
+        <!-- Financial & Tuition Report (تقرير المصروفات والمدفوعات) -->
+        <div class="mb-8 text-right">
+            @php
+                $payments = $student->payments;
+                $totalNetRequired = $payments->sum(fn ($p) => max(0, $p->total_amount - $p->discount));
+                $totalPaid = $payments->sum('paid_amount');
+                $totalRemaining = $payments->sum(fn ($p) => $p->remaining_amount);
+                $hasPayments = $payments->count() > 0;
+                $isAllPaid = $hasPayments && $totalRemaining <= 0;
+                $isPartiallyPaid = $hasPayments && $totalPaid > 0 && $totalRemaining > 0;
+                $isUnpaid = $hasPayments && $totalPaid <= 0 && $totalRemaining > 0;
+            @endphp
+
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
+                <h3 class="text-xl font-black text-slate-900 border-r-4 border-emerald-500 pr-3 flex items-center gap-2">
+                    <span>💳</span> تقرير المصروفات والمدفوعات المالية
+                </h3>
+                @if($hasPayments)
+                    <div>
+                        @if($isAllPaid)
+                            <span class="bg-emerald-100 text-emerald-800 border border-emerald-300 font-black text-xs px-4 py-1.5 rounded-full inline-flex items-center gap-1 shadow-sm">
+                                ✅ تم السداد بالكامل (لا توجد متبقيات)
+                            </span>
+                        @elseif($isPartiallyPaid)
+                            <span class="bg-amber-100 text-amber-800 border border-amber-300 font-black text-xs px-4 py-1.5 rounded-full inline-flex items-center gap-1 shadow-sm">
+                                ⏳ سداد جزئي (متبقي: {{ number_format($totalRemaining, 2) }} ج.م)
+                            </span>
+                        @else
+                            <span class="bg-rose-100 text-rose-800 border border-rose-300 font-black text-xs px-4 py-1.5 rounded-full inline-flex items-center gap-1 shadow-sm">
+                                ❌ لم يتم السداد (مستحق: {{ number_format($totalRemaining, 2) }} ج.م)
+                            </span>
+                        @endif
+                    </div>
+                @endif
+            </div>
+
+            @if($hasPayments)
+                <!-- 3 Quick Financial KPI Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                    <!-- Total Required -->
+                    <div class="bg-gradient-to-br from-blue-50 to-sky-50 p-4 rounded-2xl border border-blue-200 text-center">
+                        <span class="block text-slate-500 font-bold text-xs mb-1">إجمالي المطلوب (بعد الخصم)</span>
+                        <span class="text-2xl font-black text-blue-900">{{ number_format($totalNetRequired, 2) }}</span>
+                        <span class="text-xs text-blue-700 font-bold block mt-0.5">جنيه مصري</span>
+                    </div>
+
+                    <!-- Paid Amount -->
+                    <div class="bg-gradient-to-br from-emerald-50 to-teal-50 p-4 rounded-2xl border border-emerald-200 text-center">
+                        <span class="block text-slate-500 font-bold text-xs mb-1">المبلغ المدفوع (المحصل)</span>
+                        <span class="text-2xl font-black text-emerald-800">{{ number_format($totalPaid, 2) }}</span>
+                        <span class="text-xs text-emerald-700 font-bold block mt-0.5">جنيه مصري</span>
+                    </div>
+
+                    <!-- Remaining Amount -->
+                    <div class="bg-gradient-to-br from-{{ $totalRemaining > 0 ? 'rose' : 'emerald' }}-50 to-{{ $totalRemaining > 0 ? 'red' : 'teal' }}-50 p-4 rounded-2xl border border-{{ $totalRemaining > 0 ? 'rose' : 'emerald' }}-200 text-center">
+                        <span class="block text-slate-500 font-bold text-xs mb-1">المبلغ المتبقي المستحق</span>
+                        <span class="text-2xl font-black text-{{ $totalRemaining > 0 ? 'rose-700' : 'emerald-700' }}">
+                            {{ number_format($totalRemaining, 2) }}
+                        </span>
+                        <span class="text-xs text-{{ $totalRemaining > 0 ? 'rose' : 'emerald' }}-600 font-bold block mt-0.5">
+                            {{ $totalRemaining > 0 ? 'جنيه مصري مستحق' : 'تم السداد بالكامل ✔' }}
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Detailed Payments Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-slate-800 border border-slate-200 rounded-2xl overflow-hidden">
+                        <thead class="bg-slate-50 text-slate-700 text-xs font-bold">
+                            <tr>
+                                <th class="p-3 text-right">الكورس / الاشتراك</th>
+                                <th class="p-3 text-right">خطة الدفع</th>
+                                <th class="p-3 text-center">إجمالي الرسوم</th>
+                                <th class="p-3 text-center">الخصم</th>
+                                <th class="p-3 text-center">المدفوع</th>
+                                <th class="p-3 text-center">المتبقي</th>
+                                <th class="p-3 text-center">حالة السداد</th>
+                                <th class="p-3 text-center">الاستحقاق</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            @foreach($payments as $payment)
+                                @php
+                                    $rem = $payment->remaining_amount;
+                                    $planLabel = match($payment->payment_plan) {
+                                        'monthly' => 'شهري',
+                                        'quarterly' => 'ربع سنوي (3 شهور)',
+                                        'full' => 'دفعة كاملة',
+                                        default => $payment->payment_plan ?: '—'
+                                    };
+                                @endphp
+                                <tr class="hover:bg-slate-50/60 transition-colors">
+                                    <td class="p-3">
+                                        <span class="font-extrabold text-slate-900 block">{{ $payment->course?->title ?? 'اشتراك أكاديمي' }}</span>
+                                        @if($payment->group)
+                                            <span class="text-xs text-slate-500 font-medium">المجموعة: {{ $payment->group->name }}</span>
+                                        @endif
+                                    </td>
+                                    <td class="p-3 text-xs font-semibold text-slate-600">
+                                        <span class="bg-slate-100 px-2 py-1 rounded-md">{{ $planLabel }}</span>
+                                    </td>
+                                    <td class="p-3 text-center font-bold text-slate-900 dir-ltr">
+                                        {{ number_format($payment->total_amount, 2) }} ج.م
+                                    </td>
+                                    <td class="p-3 text-center text-xs text-slate-500 dir-ltr">
+                                        {{ $payment->discount > 0 ? number_format($payment->discount, 2) . ' ج.م' : '—' }}
+                                    </td>
+                                    <td class="p-3 text-center font-bold text-emerald-700 dir-ltr">
+                                        {{ number_format($payment->paid_amount, 2) }} ج.م
+                                    </td>
+                                    <td class="p-3 text-center font-bold {{ $rem > 0 ? 'text-rose-600' : 'text-slate-400' }} dir-ltr">
+                                        {{ number_format($rem, 2) }} ج.م
+                                    </td>
+                                    <td class="p-3 text-center">
+                                        @if($rem <= 0 || $payment->status === 'paid')
+                                            <span class="px-2.5 py-1 text-xs font-black rounded-full bg-green-100 text-green-800">
+                                                ✔ مسدد بالكامل
+                                            </span>
+                                        @elseif($payment->paid_amount > 0)
+                                            <span class="px-2.5 py-1 text-xs font-black rounded-full bg-amber-100 text-amber-800">
+                                                ⏳ سداد جزئي
+                                            </span>
+                                        @elseif($payment->status === 'overdue' || $payment->is_overdue)
+                                            <span class="px-2.5 py-1 text-xs font-black rounded-full bg-red-100 text-red-800">
+                                                ⚠️ متأخر
+                                            </span>
+                                        @else
+                                            <span class="px-2.5 py-1 text-xs font-black rounded-full bg-rose-100 text-rose-800">
+                                                ❌ مستحق
+                                            </span>
+                                        @endif
+                                    </td>
+                                    <td class="p-3 text-center text-xs text-slate-500 whitespace-nowrap">
+                                        @if($rem <= 0)
+                                            <span class="text-green-600 font-bold">مكتمل</span>
+                                        @elseif($payment->next_due_date)
+                                            <span class="{{ $payment->is_overdue ? 'text-red-600 font-bold' : '' }}">
+                                                {{ $payment->next_due_date->format('Y-m-d') }}
+                                            </span>
+                                        @else
+                                            <span>غير محدد</span>
+                                        @endif
+                                    </td>
+                                </tr>
+
+                                @if($payment->installments->count() > 0)
+                                    <tr class="bg-slate-50/50">
+                                        <td colspan="8" class="p-3 pr-6">
+                                            <div class="text-xs text-slate-600 space-y-1">
+                                                <span class="font-bold text-slate-700 block mb-1">📅 تفاصيل الأقساط المسجلة:</span>
+                                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                                                    @foreach($payment->installments as $idx => $inst)
+                                                        <div class="p-2 rounded-lg bg-white border border-slate-200 flex justify-between items-center text-[11px]">
+                                                            <span>قسط #{{ $idx + 1 }}: <strong>{{ number_format($inst->amount, 2) }} ج.م</strong></span>
+                                                            <span class="font-medium">
+                                                                {{ $inst->due_date ? $inst->due_date->format('Y-m-d') : '—' }}
+                                                            </span>
+                                                            <span class="px-1.5 py-0.5 rounded font-bold {{ $inst->status === 'paid' ? 'bg-green-100 text-green-800' : ($inst->is_overdue ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800') }}">
+                                                                {{ match($inst->status) { 'paid' => 'مدفوع ✔', 'overdue' => 'متأخر ⚠️', default => 'مستحق' } }}
+                                                            </span>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @else
+                <div class="p-6 text-center text-slate-500 border border-dashed border-slate-200 rounded-2xl bg-slate-50/50">
+                    <span class="text-2xl block mb-1">💳</span>
+                    لا توجد أي اشتراكات أو مدفوعات مسجلة للطالب حالياً.
+                </div>
+            @endif
         </div>
 
         <!-- Academic Evaluations -->

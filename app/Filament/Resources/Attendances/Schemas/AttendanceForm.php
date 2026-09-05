@@ -91,7 +91,20 @@ class AttendanceForm
                     ->searchable()
                     ->preload()
                     ->live()
-                    ->helperText('إذا كان الطالب مسجلاً مسبقاً في هذه الحصة، سيتم تحديث حالته وملاحظاته دون تكرار.')
+                    ->helperText(function (callable $get) {
+                        $studentId = $get('student_id');
+                        if (!$studentId) {
+                            return 'إذا كان الطالب مسجلاً مسبقاً في هذه الحصة، سيتم تحديث حالته وملاحظاته دون تكرار.';
+                        }
+                        $student = User::find($studentId);
+                        if (!$student) {
+                            return null;
+                        }
+                        $total = $student->total_sessions ?: 24;
+                        $attended = $student->attended_sessions_count;
+                        $remaining = max(0, $total - $attended);
+                        return "📊 رصيد الطالب: حضر {$attended} من {$total} حصة (المتبقي له: {$remaining} حصة).";
+                    })
                     ->options(function (callable $get, $record) {
                         $groupId = $get('group_id');
                         $sessionId = $get('class_session_id');
@@ -103,23 +116,24 @@ class AttendanceForm
                             $query->whereIn('id', $studentIds);
                         }
 
-                        $students = $query->pluck('name', 'id');
-
+                        $recordedStudentIds = [];
                         if ($sessionId) {
                             $recordedStudentIds = Attendance::where('class_session_id', $sessionId)
                                 ->when($record, fn ($q) => $q->where('id', '!=', $record->id))
                                 ->pluck('student_id')
                                 ->toArray();
-
-                            return $students->map(function ($name, $id) use ($recordedStudentIds) {
-                                if (in_array($id, $recordedStudentIds)) {
-                                    return "{$name} (مسجل مسبقاً ✔)";
-                                }
-                                return $name;
-                            });
                         }
 
-                        return $students;
+                        $students = $query->withCount([
+                            'attendances as attended_count' => fn ($q) => $q->whereIn('status', ['present', 'late'])
+                        ])->get();
+
+                        return $students->mapWithKeys(function ($student) use ($recordedStudentIds) {
+                            $total = $student->total_sessions ?: 24;
+                            $attended = $student->attended_count;
+                            $tag = in_array($student->id, $recordedStudentIds) ? ' (مسجل مسبقاً ✔)' : '';
+                            return [$student->id => "{$student->name} (حضر {$attended}/{$total}){$tag}"];
+                        });
                     })
                     ->afterStateUpdated(function ($state, callable $set, callable $get) {
                         if ($state && ($sessionId = $get('class_session_id'))) {

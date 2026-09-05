@@ -32,7 +32,15 @@ class AttendancesTable
                     ->placeholder('—'),
                 TextColumn::make('student.name')
                     ->label('الطالب')
-                    ->searchable(),
+                    ->searchable()
+                    ->description(function ($record) {
+                        $student = $record->student;
+                        if (!$student) return null;
+                        $total = $student->total_sessions ?: 24;
+                        $attended = $student->attended_sessions_count;
+                        $remaining = max(0, $total - $attended);
+                        return "حضر {$attended} من {$total} (باقي {$remaining})";
+                    }),
                 TextColumn::make('status')
                     ->label('الحالة')
                     ->formatStateUsing(fn (string $state): string => match ($state) {
@@ -49,6 +57,26 @@ class AttendancesTable
                         default => 'gray',
                     })
                     ->searchable(),
+                TextColumn::make('student_balance')
+                    ->label('رصيد الحصص (من 24)')
+                    ->badge()
+                    ->state(function ($record) {
+                        $student = $record->student;
+                        if (!$student) return '—';
+                        $total = $student->total_sessions ?: 24;
+                        $attended = $student->attended_sessions_count;
+                        $remaining = max(0, $total - $attended);
+                        return "{$attended} / {$total} (باقي {$remaining})";
+                    })
+                    ->color(function ($record) {
+                        $student = $record->student;
+                        if (!$student) return 'gray';
+                        $total = $student->total_sessions ?: 24;
+                        $attended = $student->attended_sessions_count;
+                        if ($attended >= $total) return 'danger';
+                        if ($attended >= ($total - 4)) return 'warning';
+                        return 'success';
+                    }),
                 TextColumn::make('created_at')
                     ->label('تاريخ الإنشاء')
                     ->dateTime()
@@ -92,6 +120,7 @@ class AttendancesTable
                         'تاريخ الحصة' => fn ($r) => $r->classSession?->session_date?->format('Y-m-d') ?? '',
                         'موضوع الحصة' => fn ($r) => $r->classSession?->topic ?? '',
                         'الطالب' => fn ($r) => $r->student?->name ?? '',
+                        'رصيد الحصص (من 24)' => fn ($r) => $r->student ? ($r->student->attended_sessions_count . ' من ' . ($r->student->total_sessions ?: 24) . ' (باقي ' . $r->student->remaining_sessions_count . ')') : '',
                         'الحالة' => fn ($r) => match($r->status) { 'present' => 'حاضر', 'absent' => 'غائب', 'late' => 'متأخر', default => $r->status },
                         'ملاحظات' => 'notes',
                     ]),
